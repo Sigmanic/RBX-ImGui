@@ -2438,6 +2438,7 @@ local library library = {
             end
 
             self.show()
+            self.self = items
             return self
         end
 
