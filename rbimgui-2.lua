@@ -348,7 +348,7 @@ do -- Load items
     Layer.Parent = Main
     Layer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     Layer.BackgroundTransparency = 1.000
-    Layer.Position = UDim2.new(0, 2, 0, 2)
+    Layer.Position = UDim2.new(0, 1, 0, 1)
     Layer.Size = UDim2.new(1, 0, 10.090909, 0)
     Layer.ZIndex = 0
     Layer.Image = "rbxassetid://3570695787"
@@ -1388,6 +1388,7 @@ local library library = {
 
         options = settings.new({
             text = "New Window",
+            font = Enum.Font.Code,
             size = Vector2.new(300, 200),
             shadow = 10,
             transparency = 0.2,
@@ -1420,6 +1421,7 @@ local library library = {
 
         dragger.new(main)
         main:FindFirstChild("Title").Text = options.text
+        main:FindFirstChild("Title").Font = options.font
         main.ImageColor3 = options.color
         main:FindFirstChild("Frame").BackgroundColor3 = options.color
         main.Size = UDim2.new(0, options.size.X, 0, main.Size.Y.Offset)
@@ -1445,12 +1447,16 @@ local library library = {
             local self = { }
             tabOptions = settings.new({
                 text = "New Tab",
+                font = Enum.Font.Code,
+                autoscrolling = false,
+                forcescrollbotom = false,
             }).handle(tabOptions)
 
             local tabbutton = new("TabButton")
             local tabbuttons = tabs:FindFirstChild("Items")
             tabbutton.Parent = tabbuttons
             tabbutton.Text = tabOptions.text
+            tabbutton.Font = tabOptions.font
             tabbutton.Size = UDim2.new(0, tabbutton.TextBounds.X, 1, 0)
             tabbutton.TextColor3 = Color3.new(0.4, 0.4, 0.4)
             tabbutton.MouseButton1Click:Connect(function()
@@ -1489,6 +1495,10 @@ local library library = {
                 if XY then
                     items.CanvasSize = UDim2.new(0, XY.X, 0, XY.Y)
                 end
+                if tabOptions.autoscrolling and XY.Y > items.AbsoluteWindowSize.Y then
+                    local y = tabOptions.forcescrollbotom and items.CanvasPosition.Y + 20 or XY.Y
+                    items.CanvasPosition = Vector2.new(0, y)
+                end
             end
 
             items.ScrollBarImageColor3 = Color3.new()
@@ -1502,11 +1512,13 @@ local library library = {
                     labelOptions = settings.new({
                         text = "New Label",
                         color = Color3.new(1, 1, 1),
+                        font = Enum.Font.Code,
                     }).handle(labelOptions)
 
                     local label = new("Label")
                     label.Parent = items
                     label.Text = labelOptions.text
+                    label.Font = labelOptions.font
                     label.Size = UDim2.new(0, label.TextBounds.X, 0, label.Size.Y.Offset)
                     label.TextColor3 = labelOptions.color
 
@@ -1534,12 +1546,14 @@ local library library = {
                     buttonOptions = settings.new({
                         text = "New Button",
                         color = options.color,
+                        font = Enum.Font.Code,
                         rounding = options.rounding,
                     }).handle(buttonOptions)
 
                     local button = new("Button")
                     button.Parent = items
                     button.Text = buttonOptions.text
+                    button.Font = buttonOptions.font
                     button.Size = UDim2.new(0, button.TextBounds.X + 20, 0, 20)
                     button.MouseButton1Click:Connect(function()
                         if not self.eventBlock then
@@ -1580,6 +1594,7 @@ local library library = {
 
                     switchOptions = settings.new({
                         text = "New Switch",
+                        font = Enum.Font.Code,
                         on = false,
                         color = options.color,
                         rounding = options.rounding,
@@ -1605,6 +1620,7 @@ local library library = {
                     end)
 
                     text.Text = switchOptions.text
+                    text.Font = switchOptions.font
                     check.ImageTransparency = self.on and 0 or 1
 
                     button.MouseButton1Click:Connect(function()
@@ -1648,6 +1664,7 @@ local library library = {
 
                     sliderOptions = settings.new({
                         text = "New Slider",
+                        font = Enum.Font.Code,
                         size = 150,
                         min = 0,
                         max = 100,
@@ -1691,6 +1708,7 @@ local library library = {
                     end
 
                     text.Text = sliderOptions.text
+                    text.Font = sliderOptions.font
                     outer.Size = UDim2.new(0, sliderOptions.size, 0, 20)
                     text.Position = UDim2.new(0, sliderOptions.size + 8, 0, 0)
                     slider.Size = UDim2.new(0, sliderOptions.size + 8 + text.TextBounds.X, 0, 20)
@@ -1774,6 +1792,7 @@ local library library = {
 
                     colorOptions = settings.new({
                         text = "New Color Picker",
+                        font = Enum.Font.Code,
                         color = Color3.new(1, 0, 0),
                         position = UDim2.new(0, 100, 0, 100),
                     }).handle(colorOptions)
@@ -1796,6 +1815,7 @@ local library library = {
                     end)
 
                     text.Text = colorOptions.text
+                    text.Font = colorOptions.font
 
                     button.MouseButton1Click:Connect(function()
                         self.visible = not self.visible
@@ -1987,6 +2007,7 @@ local library library = {
 
                     dropdownOptions = settings.new({
                         text = "New Dropdown",
+                        font = Enum.Font.Code,
                         size = 150,
                         color = Color3.fromRGB(32, 59, 97),
                         rounding = options.rounding,
@@ -2009,6 +2030,7 @@ local library library = {
                     inner:FindFirstChild("Value").Text = "[...]"
 
                     text.Text = dropdownOptions.text
+                    text.Font = dropdownOptions.Font
                     dropdownWindow:FindFirstChild("Title").Text = dropdownOptions.text
                     outer.Size = UDim2.new(0, dropdownOptions.size, 0, 20)
                     text.Position = UDim2.new(0, dropdownOptions.size + 8, 0, 0)
@@ -2296,6 +2318,7 @@ local library library = {
 
                     folderOptions = settings.new({
                         text = "New Folder",
+                        font = Enum.Font.Code,
                         isopen = false,
                         color = options.color,
                         rounding = options.rounding,
@@ -2322,6 +2345,7 @@ local library library = {
                     local title = _folder:FindFirstChild("Title")
                     local expand = _folder:FindFirstChild("Expand")
                     title.Text = folderOptions.text
+                    title.Font = folderOptions.Font
 
                     function self.close()
                         resize(folder, { Size = UDim2.new(1, 0, 0, 20) }, folderOptions.animation)
@@ -2451,6 +2475,9 @@ local library library = {
             cache.tabs_size = tabs.Size.Y.Offset
             resize(content, { Size = UDim2.new(1, 0, 0, 0) }, options.animation)
             resize(tabs, { Size = UDim2.new(1, 0, 0, 0) }, options.animation)
+            main:FindFirstChild("Frame").Visible = false
+            main.ImageTransparency = 0.9
+            layer.ImageTransparency = 0.7 
         end
 
         function self.open()
@@ -2460,6 +2487,9 @@ local library library = {
             resize(expand, { Rotation = 90 }, options.animation)
             resize(content, { Size = UDim2.new(1, 0, 0, cache.content_size) }, options.animation)
             resize(tabs, { Size = UDim2.new(1, 0, 0, cache.tabs_size) }, options.animation)
+            main:FindFirstChild("Frame").Visible = true
+            main.ImageTransparency = 0
+            layer.ImageTransparency = options.transparency
         end
 
         function self.setPosition(pos)
