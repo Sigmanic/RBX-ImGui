@@ -1,12 +1,11 @@
 --[[
-	rbimgui-2
-	version 1.2
-	by Singularity
-        https://v3rmillion.net/member.php?action=profile&uid=947830
-        Singularity#5490
+	RBX-ImGui.
+	Version 0.2.
+	Created By: Singularity (https://v3rmillion.net/member.php?action=profile&uid=947830, Singularity#5490).
+    Tweaked By: Sigmanic.
 --]]
 
-repeat wait() until game:GetService("Players").LocalPlayer
+repeat task.wait() until game:GetService("Players").LocalPlayer
 if game:GetService("CoreGui"):FindFirstChild("imgui2") then
     game:GetService("CoreGui"):FindFirstChild("imgui2"):Destroy()
 end
@@ -1494,10 +1493,10 @@ local library library = {
                 local XY = countSize(items)
                 if XY then
                     items.CanvasSize = UDim2.new(0, XY.X, 0, XY.Y)
-                end
-                if tabOptions.autoscrolling and XY.Y > items.AbsoluteWindowSize.Y then
-                    local y = tabOptions.forcescrollbotom and items.CanvasPosition.Y + 20 or XY.Y
-                    items.CanvasPosition = Vector2.new(0, y)
+                    if tabOptions.autoscrolling and XY.Y > items.AbsoluteWindowSize.Y then
+                        local y = tabOptions.forcescrollbotom and items.CanvasPosition.Y + 20 or XY.Y
+                        items.CanvasPosition = Vector2.new(0, y)
+                    end
                 end
             end
 
